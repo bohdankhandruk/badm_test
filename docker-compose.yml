@@ -1,0 +1,42 @@
+services:
+  web:
+    image: nginx
+    container_name: badm_test_web
+    volumes:
+      - ./src:/usr/share/nginx/web
+      - ./web/conf.d:/etc/nginx/conf.d
+  php:
+    build:
+      context: ./php
+    container_name: badm_test_php
+    extra_hosts:
+      - "172.17.0.1:host-gateway"
+    environment:
+      XDEBUG_MODE: develop,debug
+      XDEBUG_CONFIG:
+        client_host=172.17.0.1
+        start_with_request=yes
+    volumes:
+      - ./src:/usr/share/nginx/web
+  db:
+    image: mariadb
+    container_name: badm_test_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+  pma:
+    image: phpmyadmin
+    container_name: badm_test_pma
+    environment:
+      PMA_USER: laravel
+      PMA_PASSWORD: laravel
+      PMA_HOST: db
+  web_reverse_proxy:
+    image: nginx
+    container_name: badm_test_web_reverse_proxy
+    ports:
+      - 80:80
+    volumes:
+      - ./web_reverse_proxy/conf.d:/etc/nginx/conf.d
