@@ -5,6 +5,8 @@ services:
     volumes:
       - ./src:/usr/share/nginx/web
       - ./web/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - db
   php:
     build:
       context: ./php
