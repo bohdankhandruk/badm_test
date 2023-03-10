@@ -40,3 +40,9 @@ services:
       - 80:80
     volumes:
       - ./web_reverse_proxy/conf.d:/etc/nginx/conf.d
+  node:
+    image: node
+    container_name: badm_test_node
+    volumes:
+      - ./react:/badm_test_app
+    command: sh -c 'cd badm_test_app && npm start'
