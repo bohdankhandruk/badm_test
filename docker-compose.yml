@@ -18,6 +18,8 @@ services:
         start_with_request=yes
     volumes:
       - ./src:/usr/share/nginx/web
+    depends_on:
+      - db
   db:
     image: mariadb
     container_name: badm_test_db
