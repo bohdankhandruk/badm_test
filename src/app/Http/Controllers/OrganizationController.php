@@ -89,7 +89,7 @@ class OrganizationController extends Controller
         Http::withHeaders([
             'Api-Token' => env('MAILTRAP_API_KEY'),
             'Content-Type' => 'application/json',
-        ])->post(env('MAILTRAP_API_URL'), [
+        ])->post(env('MAILTRAP_API_URL') . '/api/send', [
             'to' => [
                 [
                     'email' => auth()->user()->email,
