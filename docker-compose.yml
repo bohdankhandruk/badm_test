@@ -44,6 +44,8 @@ services:
       - 80:80
     volumes:
       - ./web_reverse_proxy/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - db
   node:
     image: node
     container_name: badm_test_node
